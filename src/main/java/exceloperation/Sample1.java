@@ -65,7 +65,13 @@ else{
 }
 	
 }
-al2.addAll(al1);
+if(!al1.isEmpty()){
+	al2.addAll(al1);	
+}
+else{
+	al2.addAll(al3);
+}
+
 
 for(String arrayList:al2){
 	if(arrayList.contains(orderId.toLowerCase())){
@@ -89,25 +95,23 @@ for(String arrayList:al2){
 al.clear();
 al1.clear();
 al2.clear();
-in.close();
 
-filewriter.close();
-bufferwriter.close();
 }
 	
 public static void main(String[] args) throws IOException {
 		
-		//String file1="E:\WORKSPACE\eclipseneon\logs\logs.txt";
-		//String orderId="OrderID";
-		//String file2="E:\WORKSPACE\eclipseneon\logs\response.txt";
+		String file1="E:/WORKSPACE/eclipseneon/logs/logs.txt";
+		String orderId="Another git";
+		String file2="E:/WORKSPACE/eclipseneon/response/response.txt";
 
-		Scanner sc=new Scanner(System.in);
+		/*Scanner sc=new Scanner(System.in);
 		System.out.println("Enter the path of the log file");
-		String file1  =sc.next();
+		String file1  =sc.nextLine();
 		System.out.println("Enter the orderID to search in the log file");
-		String orderId=sc.next();
+		String orderId=sc.nextLine();
 		System.out.println("Enter the file to write the search results");
-		String file2=sc.next();
+		String file2=sc.nextLine();
+		sc.close();*/
 		Sample1 sample= new Sample1();
 		sample.getMyResponse(file1, orderId, file2);
 	}

@@ -7,6 +7,8 @@ public class Main {
 	
 	public static void main(String[] args) {
 		ExcelServices eService = new ExcelServicesImpl();
+		eService.readExcelColumn(3, "B","E:/WORKSPACE/eclipseneon/logs/Book1.xlsx");
+		eService.writeExcelColumn(3, "B","Anish", "E:/WORKSPACE/eclipseneon/logs/Book1.xlsx");
 		
 	}
 
