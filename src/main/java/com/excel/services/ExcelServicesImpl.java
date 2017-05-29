@@ -13,9 +13,12 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class ExcelServicesImpl implements ExcelServices{
+	
+	DatabaseServices databaseServices= new DatabaseServicesImpl();
 
 	@SuppressWarnings("deprecation")
 	public String readExcelColumn(int row, String column, String filePath) {
+		//TODO Logger Service
 		 try {
 			 
 			 FileInputStream excelFile = new FileInputStream(new File(filePath));
@@ -36,8 +39,12 @@ public class ExcelServicesImpl implements ExcelServices{
 
 	           if(currentCell.getCellType()==Cell.CELL_TYPE_STRING){
                     System.out.print(currentCell.getStringCellValue() + "--");
+                  //TODO Logger Service
+                    databaseServices.saveData(row, column,currentCell.getStringCellValue(),"READ" );
 	           }else if(currentCell.getCellType()==Cell.CELL_TYPE_NUMERIC){
                     System.out.print(currentCell.getNumericCellValue() + "--");
+                  //TODO Logger Service
+                    databaseServices.saveData(row, column,currentCell.getStringCellValue(),"READ" );
 	           }
 	           
 	            
@@ -52,12 +59,13 @@ public class ExcelServicesImpl implements ExcelServices{
 	}
 
 	public void writeExcelColumn(int row, String column, String value, String filePath) {
-		
+		//TODO Logger Service
 		FileInputStream fsIP=null;
 		try {
+			//TODO Logger Service
 			fsIP = new FileInputStream(new File(filePath));
 		} catch (FileNotFoundException e2) {
-			// TODO Auto-generated catch block
+			//TODO Logger Service
 			e2.printStackTrace();
 		}
 		Workbook workbook = null;
@@ -66,14 +74,15 @@ public class ExcelServicesImpl implements ExcelServices{
 	        try {
 				workbook = new XSSFWorkbook(fsIP);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			}
 	    } else if (filePath.endsWith("xls")) {
 	        try {
+	        	//TODO Logger Service
 				workbook = new HSSFWorkbook(fsIP);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+				//TODO Logger Service
 				e.printStackTrace();
 			}
 	    } else {
@@ -82,9 +91,9 @@ public class ExcelServicesImpl implements ExcelServices{
 		
       
 		 Cell currentCell = workbook.getSheetAt(0).getRow(row).getCell(CellReference.convertColStringToIndex(column));
-		 
+		//TODO Logger Service
 		currentCell.setCellValue(value);
-      
+		 databaseServices.saveData(row, column,value,"WRITE" );
 		try (FileOutputStream outputStream = new FileOutputStream(filePath)) {
             workbook.write(outputStream);
         } catch (IOException e) {
