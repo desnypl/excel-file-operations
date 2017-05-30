@@ -18,7 +18,7 @@ public class ExcelServicesImpl implements ExcelServices{
 
 	@SuppressWarnings("deprecation")
 	public String readExcelColumn(int row, String column, String filePath) {
-		//TODO Logger Service
+		LoggerService.getInstance().log("inside readExcelColumn method");
 		 try {
 			 
 			 FileInputStream excelFile = new FileInputStream(new File(filePath));
@@ -38,12 +38,12 @@ public class ExcelServicesImpl implements ExcelServices{
 	            Cell currentCell = workbook.getSheetAt(0).getRow(row).getCell(CellReference.convertColStringToIndex(column));
 
 	           if(currentCell.getCellType()==Cell.CELL_TYPE_STRING){
-                    System.out.print(currentCell.getStringCellValue() + "--");
-                  //TODO Logger Service
+                    //System.out.print(currentCell.getStringCellValue() + "--");
+                    LoggerService.getInstance().log("inside readExcelColumn string type");
                     databaseServices.saveData(row, column,currentCell.getStringCellValue(),"READ" );
 	           }else if(currentCell.getCellType()==Cell.CELL_TYPE_NUMERIC){
-                    System.out.print(currentCell.getNumericCellValue() + "--");
-                  //TODO Logger Service
+                    //System.out.print(currentCell.getNumericCellValue() + "--");
+	        	   LoggerService.getInstance().log("inside readExcelColumn integer type");
                     databaseServices.saveData(row, column,currentCell.getStringCellValue(),"READ" );
 	           }
 	           
@@ -59,13 +59,13 @@ public class ExcelServicesImpl implements ExcelServices{
 	}
 
 	public void writeExcelColumn(int row, String column, String value, String filePath) {
-		//TODO Logger Service
+		LoggerService.getInstance().log("inside writeExcelColumn method");
 		FileInputStream fsIP=null;
 		try {
-			//TODO Logger Service
+			LoggerService.getInstance().log("inside writeExcelColumn 1st try method");
 			fsIP = new FileInputStream(new File(filePath));
 		} catch (FileNotFoundException e2) {
-			//TODO Logger Service
+			LoggerService.getInstance().log("inside writeExcelColumn 1st catch method");
 			e2.printStackTrace();
 		}
 		Workbook workbook = null;
@@ -79,10 +79,10 @@ public class ExcelServicesImpl implements ExcelServices{
 			}
 	    } else if (filePath.endsWith("xls")) {
 	        try {
-	        	//TODO Logger Service
+	        	LoggerService.getInstance().log("its an xls sheet");
 				workbook = new HSSFWorkbook(fsIP);
 			} catch (IOException e) {
-				//TODO Logger Service
+				LoggerService.getInstance().log("xls catch block");
 				e.printStackTrace();
 			}
 	    } else {
@@ -91,13 +91,13 @@ public class ExcelServicesImpl implements ExcelServices{
 		
       
 		 Cell currentCell = workbook.getSheetAt(0).getRow(row).getCell(CellReference.convertColStringToIndex(column));
-		//TODO Logger Service
+		 LoggerService.getInstance().log("Current cell no. is :" + currentCell);
 		currentCell.setCellValue(value);
 		 databaseServices.saveData(row, column,value,"WRITE" );
 		try (FileOutputStream outputStream = new FileOutputStream(filePath)) {
             workbook.write(outputStream);
         } catch (IOException e) {
-			// TODO Auto-generated catch block
+        	 LoggerService.getInstance().log("database service call method catch block");
 			e.printStackTrace();
 		} 
              
