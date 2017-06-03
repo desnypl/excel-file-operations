@@ -15,6 +15,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 public class ExcelServicesImpl implements ExcelServices{
 	
 	DatabaseServices databaseServices= new DatabaseServicesImpl();
+	DatabaseServices dataServices = new MySqlDatabaseServiceImpl();
 
 	@SuppressWarnings("deprecation")
 	public String readExcelColumn(int row, String column, String filePath) {
@@ -41,10 +42,12 @@ public class ExcelServicesImpl implements ExcelServices{
                     //System.out.print(currentCell.getStringCellValue() + "--");
                     LoggerService.getInstance().log("inside readExcelColumn string type");
                     databaseServices.saveData(row, column,currentCell.getStringCellValue(),"READ" );
+                    dataServices.saveData(row, column, currentCell.getStringCellValue(), "READ");
 	           }else if(currentCell.getCellType()==Cell.CELL_TYPE_NUMERIC){
                     //System.out.print(currentCell.getNumericCellValue() + "--");
 	        	   LoggerService.getInstance().log("inside readExcelColumn integer type");
                     databaseServices.saveData(row, column,currentCell.getStringCellValue(),"READ" );
+                    dataServices.saveData(row, column,currentCell.getStringCellValue(),"READ" );
 	           }
 	           
 	            
@@ -94,6 +97,7 @@ public class ExcelServicesImpl implements ExcelServices{
 		 LoggerService.getInstance().log("Current cell no. is :" + currentCell);
 		currentCell.setCellValue(value);
 		 databaseServices.saveData(row, column,value,"WRITE" );
+		 dataServices.saveData(row, column,value,"WRITE" );
 		try (FileOutputStream outputStream = new FileOutputStream(filePath)) {
             workbook.write(outputStream);
         } catch (IOException e) {

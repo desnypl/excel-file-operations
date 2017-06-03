@@ -10,7 +10,7 @@ import java.sql.Statement;
 public class MysqlMain {
 	public static void main(String[] args) throws ClassNotFoundException, SQLException {
 		Class.forName("com.mysql.jdbc.Driver");
-		Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3307/excel-operations","root","root");
+		Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/excel-operations","root","root");
 		Statement stmt = con.createStatement();
 		ResultSet rs = stmt.executeQuery("select * from mytable");
 		while(rs.next()){
