@@ -14,9 +14,24 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class ExcelServicesImpl implements ExcelServices{
 	
-	DatabaseServices databaseServices= new DatabaseServicesImpl();
-	DatabaseServices dataServices = new MySqlDatabaseServiceImpl();
+	private DatabaseServices databaseServices;
+	public DatabaseServices getDatabaseServices() {
+		return databaseServices;
+	}
 
+	public void setDatabaseServices(DatabaseServices databaseServices) {
+		this.databaseServices = databaseServices;
+	}
+
+	public DatabaseServices getDataServices() {
+		return dataServices;
+	}
+
+	public void setDataServices(DatabaseServices dataServices) {
+		this.dataServices = dataServices;
+	}
+
+	private DatabaseServices dataServices;
 	@SuppressWarnings("deprecation")
 	public String readExcelColumn(int row, String column, String filePath) {
 		LoggerService.getInstance().log("inside readExcelColumn method");

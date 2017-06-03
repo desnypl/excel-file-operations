@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+
+<bean id="databaseServices" class="com.excel.services.DatabaseServicesImpl"/>
+<bean id="excelServices" class="com.excel.services.ExcelServicesImpl">
+<property ref="databaseServices" name="databaseServices"/>
+<property ref="mysqlDataServices" name="dataServices"/>
+</bean>
+<bean id="mysqlDataServices" class="com.excel.services.MySqlDatabaseServiceImpl"/>
+
+</beans>
